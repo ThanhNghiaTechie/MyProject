@@ -8,6 +8,8 @@ const App = () => {
 
     return (
         <View style={styles.container}>
+
+
             {/* Title: Đăng ký */}
             <Text style={styles.welcomeText}>Đăng ký tài khoản</Text>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 
 const App = () => {
     const [email, setEmail] = useState('');
@@ -7,6 +7,12 @@ const App = () => {
 
     return (
         <View style={styles.container}>
+
+            <Image
+                source={require('../../assets/image/checklist.png')}
+                style={styles.image}
+            />
+
             {/* Welcome Back Text */}
             <Text style={styles.welcomeText}>Welcome Back</Text>
 
@@ -86,6 +92,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    image: {
+        width: 20,
+        height: 20
+    }
 });
 
 export default App;
