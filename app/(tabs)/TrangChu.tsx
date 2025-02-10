@@ -14,7 +14,7 @@ const App = () => {
 
   // Lấy chiều cao màn hình
   const screenHeight = Dimensions.get('window').height;
-
+  <Text>hello</Text>
   return (
     <View style={styles.container}>
 
