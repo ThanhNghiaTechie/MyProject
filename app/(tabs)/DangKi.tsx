@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const App = () => {
+const App = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -40,11 +40,12 @@ const App = () => {
                 secureTextEntry={true}
             />
 
-            {/* Điều khoản và chính sách */}
-
             <View style={styles.rowContainer}>
                 <Text style={styles.termsText}>Đã có tài khoản? </Text>
-                <Text style={styles.termsText}>Đăng nhập </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('DangNhap')}>
+                    <Text style={styles.termsText}>Đăng nhập </Text>
+                </TouchableOpacity>
+
             </View>
 
             {/* Đăng ký Button */}

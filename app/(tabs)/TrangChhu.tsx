@@ -1,78 +1,99 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, FlatList, Dimensions, Image, Modal } from 'react-native';
+import { View, TextInput, Text, StyleSheet, FlatList, Dimensions, Image, Modal, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import TrangChuu from './TrangChhu'; // Import TrangChuu screen
+import DangKi from './DangKi';
+
+const Stack = createNativeStackNavigator(); // Đặt lại cho Stack navigator
 
 const App = () => {
     const [text, setText] = useState('');
-
     const [modalVisible, setModalVisible] = useState(false);
 
     // Tạo một mảng dữ liệu giả lập cho danh sách món ăn với giá tiền ngẫu nhiên
     const data = Array.from({ length: 20 }, (_, index) => ({
         name: `Món ${index + 1}`,
-        price: (Math.random() * (100000 - 10000) + 10000).toFixed(0), // Giá ngẫu nhiên từ 10,000 đến 100,000
+        price: (Math.random() * (100000 - 10000) + 10000).toFixed(0),
     }));
 
     // Lấy chiều cao màn hình
     const screenHeight = Dimensions.get('window').height;
+
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row' }}>
-                <Text
-                    style={{ padding: 20 }}
-                >Bàn số 4 đặt 2 bánh mì chảo</Text>
-                <Image
-                    source={require('../../assets/image/thongbao.png')}
-                    style={{
-                        width: 50, height: 50, marginLeft: 'auto',
-                        marginRight: 30,
-                    }}
+            <Stack.Navigator initialRouteName='TrangChuu'>
+                <Stack.Screen name="TrangChuu" component={TrangChuu} />
+                <Stack.Screen name="DangKi" component={DangKi} />
+            </Stack.Navigator>
+
+            <View style={styles.container}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text
+                        style={{
+                            padding: 20,
+                            fontSize: 17,
+                            backgroundColor: 'green',
+                            borderRadius: 30,
+                        }}
+                    >
+                        Bàn số 4 đặt 2 bánh mì chảo
+                    </Text>
+                    <Image
+                        source={require('../../assets/image/thongbao.png')}
+                        style={{
+                            width: 50,
+                            height: 50,
+                            marginLeft: 'auto',
+                            marginRight: 30,
+                        }}
+                    />
+                </View>
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Bạn cần tìm món gì ?"
+                    value={text}
+                    onChangeText={setText}
                 />
+
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => (
+                        <View style={styles.buttonContainer}>
+                            <Text style={styles.buttonText}>{item.name}</Text>
+                            <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
+                        </View>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2} // Sử dụng 2 cột
+                    columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
+                    contentContainerStyle={styles.flatListContentContainer}
+                    style={{ height: screenHeight / 1.8 }}
+                />
+
+                <View style={{
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'space-between',
+                    padding: 20
+                }}>
+                    <Image
+                        source={require('../../assets/image/home.png')}
+                        style={{ height: 50, width: 50 }}
+                    />
+                    <Image
+                        source={require('../../assets/image/checklist.png')}
+                        style={styles.image}
+                    />
+                    <Image
+                        source={require('../../assets/image/checklist.png')}
+                        style={styles.image}
+                    />
+
+                </View>
             </View>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Bạn cần tìm món gì ?"
-                value={text}
-                onChangeText={setText}
-            />
-
-            {<FlatList
-                data={data}
-                renderItem={({ item }) => (
-                    <View style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}>{item.name}</Text>
-                        <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
-                    </View>
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={2}  // Sử dụng 2 cột
-                columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
-                contentContainerStyle={styles.flatListContentContainer}
-                style={{ height: screenHeight / 1.8 }}
-            />}
-            {/* Hàng chữ A B C D */}
-            <View style={{ flexDirection: 'row' }}>
-                <Image
-                    source={require('../../assets/image/home.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('../../assets/image/checklist.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('../../assets/image/checklist.png')}
-                    style={styles.image}
-                />
-                <Image
-                    source={require('../../assets/image/Profile.png')}
-                    style={styles.image}
-                />
-            </View>
-
         </View>
-
-
     );
 };
 
@@ -121,20 +142,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between', // Giữ khoảng cách giữa các cột
         marginBottom: 10,  // Khoảng cách giữa các hàng
     },
-    bottomRow: {
-        flexDirection: 'row', // Sắp xếp các chữ theo hàng ngang
-        justifyContent: 'space-evenly', // Căn đều các chữ cái
-        width: '80%', // Chiếm 80% chiều rộng màn hình
-        marginTop: 20, // Khoảng cách từ FlatList
-    },
-    bottomText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#333',
-    },
     image: {
-        height: 30,
-        width: 30,
+        height: 40,
+        width: 40,
+        justifyContent: 'space-between',
+    },
+    profileImage: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
     }
 });
 
