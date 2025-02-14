@@ -1,12 +1,39 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, FlatList, Dimensions, Image, Modal, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './HomeScreen'; // Import HomeScreen
-import Details from './Details';
+import { getDatabase, ref, set } from "firebase/database";
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBk0olJu3BqQH__LPFT_CU76AAO1dcdEaE",
+  authDomain: "apporder-88b1c.firebaseapp.com",
+  projectId: "apporder-88b1c",
+  storageBucket: "apporder-88b1c.firebasestorage.app",
+  messagingSenderId: "557695896690",
+  appId: "1:557695896690:web:ae73754cdf5f55e9e706eb",
+  measurementId: "G-6JH9Y6LN8R"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 
-const Stack = createNativeStackNavigator(); // Đặt lại cho Stack navigator
+function writeUserData(userId: Number, name, email, imageUrl) {
+  const db = getDatabase();
+  set(ref(db, 'users/' + userId), {
+    username: name,
+    email: email,
+    profile_picture: imageUrl
+  });
+}
+
 
 const App = () => {
   const [text, setText] = useState('');
@@ -21,80 +48,73 @@ const App = () => {
   // Lấy chiều cao màn hình
   const screenHeight = Dimensions.get('window').height;
 
+  // tạo constructor
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        {/* Đảm bảo rằng tên màn hình phải khớp với tên bạn dùng trong navigation.navigate */}
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={Details} />
-      </Stack.Navigator>
-
-
-      <View style={styles.container}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text
-            style={{
-              padding: 20,
-              fontSize: 17,
-              backgroundColor: 'green',
-              borderRadius: 30,
-            }}
-          >Bàn số 4 đặt 2 bánh mì chảo</Text>
-          <Image
-            source={require('../../assets/image/thongbao.png')}
-            style={{
-              width: 50,
-              height: 50,
-              marginLeft: 'auto',
-              marginRight: 30,
-            }}
-          />
-        </View>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Bạn cần tìm món gì ?"
-          value={text}
-          onChangeText={setText}
+    < View style={styles.container} >
+      <View style={{ flexDirection: 'row' }}>
+        <Text
+          style={{
+            padding: 20,
+            fontSize: 17,
+            backgroundColor: 'green',
+            borderRadius: 30,
+          }}
+        >Bàn số 4 đặt 2 bánh mì chảo</Text>
+        <Image
+          source={require('../../assets/image/thongbao.png')}
+          style={{
+            width: 50,
+            height: 50,
+            marginLeft: 'auto',
+            marginRight: 30,
+          }}
         />
-
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <View style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>{item.name}</Text>
-              <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2} // Sử dụng 2 cột
-          columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
-          contentContainerStyle={styles.flatListContentContainer}
-          style={{ height: screenHeight / 1.8 }}
-        />
-
-        <View style={{
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-between',
-          padding: 20
-        }}>
-          <Image
-            source={require('../../assets/image/home.png')}
-            style={{ height: 50, width: 50 }}
-          />
-          <Image
-            source={require('../../assets/image/checklist.png')}
-            style={styles.image}
-          />
-          <Image
-            source={require('../../assets/image/checklist.png')}
-            style={styles.image}
-          />
-
-        </View>
       </View>
-    </NavigationContainer>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Bạn cần tìm món gì ?"
+        value={text}
+        onChangeText={setText}
+      />
+
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <View style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>{item.name}</Text>
+            <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2} // Sử dụng 2 cột
+        columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
+        contentContainerStyle={styles.flatListContentContainer}
+        style={{ height: screenHeight / 1.8 }}
+      />
+
+      <View style={{
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        padding: 20
+      }}>
+        <Image
+          source={require('../../assets/image/home.png')}
+          style={{ height: 50, width: 50 }}
+        />
+        <Image
+          source={require('../../assets/image/checklist.png')}
+          style={styles.image}
+        />
+        <Image
+          source={require('../../assets/image/checklist.png')}
+          style={styles.image}
+        />
+
+      </View>
+    </View >
   );
 };
 
