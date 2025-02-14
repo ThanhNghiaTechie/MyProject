@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-const App = ({ navigation }) => {
+const App = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     return (
+
         <View style={styles.container}>
 
 
@@ -42,10 +44,8 @@ const App = ({ navigation }) => {
 
             <View style={styles.rowContainer}>
                 <Text style={styles.termsText}>Đã có tài khoản? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('DangNhap')}>
-                    <Text style={styles.termsText}>Đăng nhập </Text>
-                </TouchableOpacity>
 
+                <Text style={styles.termsText}>Đăng nhập </Text>
             </View>
 
             {/* Đăng ký Button */}
@@ -53,6 +53,8 @@ const App = ({ navigation }) => {
                 <Text style={styles.registerButtonText}>Đăng ký</Text>
             </TouchableOpacity>
         </View>
+
+
     );
 };
 
