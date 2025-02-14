@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
-const App = () => {
+import { auth } from "../../firebase"
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+const DangKy = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const handleRegister = () => {
 
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                Alert.alert("Register success")
+
+            })
+
+            .catch(error => {
+                Alert.alert("Register fail")
+
+            });
+    };
     return (
 
         <View style={styles.container}>
@@ -49,7 +62,9 @@ const App = () => {
             </View>
 
             {/* Đăng ký Button */}
-            <TouchableOpacity style={styles.registerButton}>
+            <TouchableOpacity
+                onPress={() => { handleRegister() }}
+                style={styles.registerButton}>
                 <Text style={styles.registerButtonText}>Đăng ký</Text>
             </TouchableOpacity>
         </View>
@@ -114,4 +129,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default App;
+export default DangKy;

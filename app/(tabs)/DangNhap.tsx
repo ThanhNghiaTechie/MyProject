@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
-
-const App = () => {
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Dimensions, Image, Alert } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../../firebase"
+const DangNhap = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const handleLogin = () => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async userCredential => {
+                Alert.alert("login success")
+            })
 
+            .catch(error => {
+                Alert.alert("login fail")
+            });
+    };
     return (
         <View style={styles.container}>
 
@@ -40,7 +50,9 @@ const App = () => {
             </TouchableOpacity>
 
             {/* Đăng nhập Button */}
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity
+                onPress={() => { handleLogin() }}
+                style={styles.loginButton}>
                 <Text style={styles.loginButtonText}>Đăng nhập</Text>
             </TouchableOpacity>
         </View>
@@ -98,4 +110,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default App;
+export default DangNhap;
