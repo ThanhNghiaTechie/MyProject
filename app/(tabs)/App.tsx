@@ -27,12 +27,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-function guidulieu(): void {
-  const db = getDatabase();
-  set(ref(db, 'Địa chỉ gửi lên'), { tenbien: "Giá trị gửi lên" });
-}
-
-
 const App = () => {
   const [text, setText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -53,71 +47,71 @@ const App = () => {
   // tạo constructor
 
   return (
-    // < View style={styles.container} >
-    //   <View style={{ flexDirection: 'row' }}>
-    //     <Text
-    //       style={{
-    //         padding: 20,
-    //         fontSize: 17,
-    //         backgroundColor: 'green',
-    //         borderRadius: 30,
-    //       }}
-    //     >Bàn số 4 đặt 2 bánh mì chảo</Text>
-    //     <Image
-    //       source={require('../../assets/image/thongbao.png')}
-    //       style={{
-    //         width: 50,
-    //         height: 50,
-    //         marginLeft: 'auto',
-    //         marginRight: 30,
-    //       }}
-    //     />
-    //   </View>
+    < View style={styles.container} >
+      <View style={{ flexDirection: 'row' }}>
+        <Text
+          style={{
+            padding: 20,
+            fontSize: 17,
+            backgroundColor: 'green',
+            borderRadius: 30,
+          }}
+        >Bàn số 4 đặt 2 bánh mì chảo</Text>
+        <Image
+          source={require('../../assets/image/thongbao.png')}
+          style={{
+            width: 50,
+            height: 50,
+            marginLeft: 'auto',
+            marginRight: 30,
+          }}
+        />
+      </View>
 
-    //   <TextInput
-    //     style={styles.input}
-    //     placeholder="Bạn cần tìm món gì ?"
-    //     value={text}
-    //     onChangeText={setText}
-    //   />
+      <TextInput
+        style={styles.input}
+        placeholder="Bạn cần tìm món gì ?"
+        value={text}
+        onChangeText={setText}
+      />
 
-    //   <FlatList
-    //     data={data}
-    //     renderItem={({ item }) => (
-    //       <View style={styles.buttonContainer}>
-    //         <Text style={styles.buttonText}>{item.name}</Text>
-    //         <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
-    //       </View>
-    //     )}
-    //     keyExtractor={(item, index) => index.toString()}
-    //     numColumns={2} // Sử dụng 2 cột
-    //     columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
-    //     contentContainerStyle={styles.flatListContentContainer}
-    //     style={{ height: screenHeight / 1.8 }}
-    //   />
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <View style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>{item.name}</Text>
+            <Text style={styles.priceText}>Giá: {item.price} VNĐ</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2} // Sử dụng 2 cột
+        columnWrapperStyle={styles.columnWrapper} // Căn chỉnh khoảng cách giữa các cột
+        contentContainerStyle={styles.flatListContentContainer}
+        style={{ height: screenHeight / 1.8 }}
+      />
 
-    //   <View style={{
-    //     flexDirection: 'row',
-    //     width: '100%',
-    //     justifyContent: 'space-between',
-    //     padding: 20
-    //   }}>
-    //     <Image
-    //       source={require('../../assets/image/home.png')}
-    //       style={{ height: 50, width: 50 }}
-    //     />
-    //     <Image
-    //       source={require('../../assets/image/checklist.png')}
-    //       style={styles.image}
-    //     />
-    //     <Image
-    //       source={require('../../assets/image/checklist.png')}
-    //       style={styles.image}
-    //     />
+      <View style={{
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        padding: 20
+      }}>
+        <Image
+          source={require('../../assets/image/home.png')}
+          style={{ height: 50, width: 50 }}
+        />
+        <Image
+          source={require('../../assets/image/checklist.png')}
+          style={styles.image}
+        />
+        <Image
+          source={require('../../assets/image/checklist.png')}
+          style={styles.image}
+        />
 
-    //   </View>
-    // </View >
-    <DangNhap />
+      </View>
+    </View >
+
   );
 };
 
